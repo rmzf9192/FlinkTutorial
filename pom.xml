@@ -20,24 +20,44 @@
             <artifactId>flink-streaming-scala_2.11</artifactId>
             <version>1.7.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-kafka-0.11_2.11</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.bahir</groupId>
+            <artifactId>flink-connector-redis_2.11</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-elasticsearch6_2.11</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.44</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-statebackend-rocksdb_2.11</artifactId>
+            <version>1.7.2</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <!--
-        该插件用于将 Scala
-        代码编译成 class
-        文件 -->
+        该插件用于将 Scala代码编译成 class文件 -->
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
                 <version>3.4.6</version>
                 <executions>
                     <execution>
-                        <!--
-        声明绑定到 maven
-        的 compile
-        阶段 -->
+                        <!--声明绑定到 maven的 compile阶段 -->
                         <goals>
                             <goal>testCompile</goal>
                         </goals>
