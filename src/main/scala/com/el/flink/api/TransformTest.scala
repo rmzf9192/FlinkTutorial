@@ -1,8 +1,11 @@
 package com.el.flink.api
 
 import org.apache.flink.api.common.functions.{FilterFunction, RichMapFunction}
+import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.configuration.Configuration
+import org.apache.flink.runtime.types.FlinkScalaKryoInstantiator
 import org.apache.flink.streaming.api.scala._
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer011
 
 /**
  * @author roman zhangfei
@@ -39,6 +42,10 @@ object TransformTest {
     val lowTempStream = splitStream.select("low")
     val allTempStream = splitStream.select("high", "low")
 
+    val union = highTempStream.union(lowTempStream).map(_.tempaerature.toString)
+
+    // 主函数中添加 sink
+    union.addSink(new FlinkKafkaProducer011[String]("localhost:9092","test",new SimpleStringSchema()))
 
     // 3. 合并两条流
     val warningStream = highTempStream.map( sensorData => (sensorData.id, sensorData.tempaerature) )
@@ -61,6 +68,8 @@ object TransformTest {
     //    lowTempStream.print("low")
     //    allTempStream.print("all")
     //    unionStream.print("union")
+
+    dataStream.map(new MyMapper()).print()
 
     env.execute("transform test job")
   }
